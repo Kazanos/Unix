@@ -31,5 +31,6 @@ elif [ "$1" == "--help" ]; then
 	echo "Exit status:"
 	echo "  0 program prebehol spravne"
 	echo "  1 subor sa nenasiel"
-else true 
+else
+	echo "Chyba"
 fi
