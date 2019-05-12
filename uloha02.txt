@@ -1,0 +1,26 @@
+1) pretože už zostávaly len dva, a teda tri nemohol zahodiť
+
+2) $# vráti počet zostávajúcich argumentov
+  
+   ${#premenna} vráti dĺžku danej premennej
+
+   ${!premenna} vráti obsah premennej, ktora sa vola ako obsah danej premennej
+
+   ${premenna:-vyraz} vráti výraz, ak je premenná prázdna, inak normálne vráti
+   premennú
+
+   ${premenna:cislo} vráti všetky znaky premennej od danej pozície premennej
+
+   ${premenna:cislo1:cislo2} vráti číslo2 znakov od číslo1-vej pozície
+   premennej 
+
+   ${premenna/vyraz/text} vráti premennú, kde prvý výskyt výrazu v každom
+   slove bude nahradený daným textom
+
+   ${premenna//vyraz/text} vráti premennú, kde každý výskyt výrazu je
+   nahradený daným textom
+
+   @ môže byť použité viacmenej hocikde, keďže to reprezentuje všetky
+   argumenty spojené do jedného (vrátane medzier), čo ale nerobí vždy to čo
+   by sme chceli, ako napr. f5 vráti všetko od 4-tej pozície celkovo, nie pre
+   jednotlivé slová
