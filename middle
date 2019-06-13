@@ -1,0 +1,55 @@
+#!/bin/sh
+if [ "$1" == "--line" -o "$1" == "-l" ]; then
+	IFS='-'
+	read -ra range <<< "$2"
+	IFS=' '
+	target=$3
+	touch ${TMP}/input.txt
+	if [[ "$#" != "3" ]]
+	then
+
+		target=${TMP}/input.txt
+		cat > $target
+		
+	fi
+	head -n ${range[1]}  "$target" | tail -n +${range[0]}
+	rm "${TMP}/input.txt"
+elif [ "$1" == "--fraction" -o "$1" == "-f" ]; then
+        IFS='/'
+	read -ra s <<< "$2"
+	read -ra e <<< "$3"
+	IFS=' '
+	target=$4
+	touch ${TMP}/input.txt
+	if [[ "$#" != "4" ]]
+        then
+
+                target=${TMP}/input.txt
+                cat > $target
+
+        fi
+	count=($(wc -l $target))
+	startline=$(( (${s[0]} * $count) / ${s[1]}))
+	endline=$(( (${e[0]} * $count) / ${e[1]}))
+	head -n $endline  "$target" | tail -n +$startline
+        rm "${TMP}/input.txt"
+elif [ "$1" == "--part" -o "$1" == "-p" ]; then
+        IFS='/'
+        read -ra part <<< "$2"
+        IFS=' '
+        target=$3
+        touch ${TMP}/input.txt
+        if [[ "$#" != "3" ]]
+        then
+
+                target=${TMP}/input.txt
+                cat > $target
+
+        fi
+	count=($(wc -l $target))
+	size=$(( $count / ${part[1]} ))
+        endline=$(( ${part[0]} * size ))
+	head -n $endline  "$target" | tail -n $size
+	rm "${TMP}/input.txt"
+fi
+
