@@ -1,0 +1,32 @@
+#!/bin/sh
+if [  "$1" == "-n" ]; then
+        N=$2
+        target=$3
+        touch ${TMP}/input.txt
+        if [[ "$#" < "3" ]]
+        then
+
+                target=${TMP}/input.txt
+                cat > $target
+
+        fi
+	count=($(wc -l $target))
+	x=$count
+	while [[ $x > 0 ]]
+	do
+		head -n $x  "$target" | tail -n +$(( $x - 1))
+			x=$((x - 2))
+	done
+	rm "${TMP}/input.txt"
+else
+	target=$1
+	touch ${TMP}/input.txt
+	if [[ "$#" < "1" ]]
+	then
+		target=${TMP}/input.txt
+		cat > $target
+	fi
+	tac "$target"
+	rm "${TMP}/input.txt"	
+fi
+
