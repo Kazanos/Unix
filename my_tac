@@ -14,8 +14,14 @@ if [  "$1" == "-n" ]; then
 	x=$count
 	while [[ $x > 0 ]]
 	do
-		head -n $x  "$target" | tail -n +$(( $x - 1))
-			x=$((x - 2))
+		if [ $x -lt $N ]
+		then
+			head -n $x "$target"
+			x=0
+		else
+			head -n $x  "$target" | tail -n +$(( $x - $N + 1))
+			x=$((x - $N))
+		fi
 	done
 	rm "${TMP}/input.txt"
 else
