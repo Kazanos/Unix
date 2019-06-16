@@ -1,0 +1,38 @@
+#!/bin/sh
+
+rename(){
+	find "$1" -maxdepth 1 -regex ".*/[^$fresh]*" -type f -exec sh -c ' \
+	file="{}" ; \
+	originalname=$(basename "$file") ; \
+	freshname=`echo "$originalname" | tr [$2] [$3]` ; \
+	path=$(dirname "$file") ; \
+	if [ -f "$path"/"$freshname" ] ; \
+	then echo "Kolizia na $path/$freshname" >&2 ;
+	else mv "{}" "$path"/"$freshname" ;
+	fi
+	' _ {} $orig $fresh \;
+
+	find "$1" -maxdepth 1 -not -regex "^.$" -type d -print0| while read -d '' -r newtarget; \
+	do if [ "$newtarget" != "$1" ]; \
+	then rename "$newtarget"; \
+	fi ; \
+	done
+}
+
+if [ "$1" = "-r" ]; then
+	orig="a-z"
+	fresh="A-Z"
+	shift
+else
+	orig="A-Z"
+	fresh="a-z"
+fi
+
+if [ $# -eq 0 ]; then
+	rename "./"
+fi
+
+for target in $@
+do
+	rename $target
+done
