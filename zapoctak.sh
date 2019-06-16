@@ -10,7 +10,6 @@ simplifyTo(){
 a="$TMP/a"
 b="$TMP/b"
 c="$TMP/c"
-width=(tput cols)
 
 > "$a"
 simplifyTo "$a"
@@ -30,9 +29,9 @@ do
 	clear
 	cat $c | awk -e '
 	BEGIN{
-		x=1
-		for(i=1;i<=width;i++)
-	                if( ((sqrt(x)-1)/(sqrt(10)-1)-(i-20)) <= 1 ){
+		x=10
+		for(i=1;i<=100;i++)
+	                if( ((sqrt(x)-1)/(sqrt(10)-1)-(i-15)) < 1 ){
 				printf x
 				x=x*10
 				}
