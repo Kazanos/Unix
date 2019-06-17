@@ -10,6 +10,7 @@ simplifyTo(){
 a="$TMP/a"
 b="$TMP/b"
 c="$TMP/c"
+mkdir -p temp
 
 > "$a"
 simplifyTo "$a"
@@ -30,7 +31,7 @@ do
 	cat $c | awk -e '
 	BEGIN{
 		printf "\033[33m" "%-20s", " " "\033[33m"
-		for(i=1;i<=100000;i=(i*10)){
+		for(i=1;i<=10000;i=(i*10)){
 			x=(sqrt(i/10)-1)/(sqrt(10)-1)
 			for(j=0;j<x; j++)
                                 printf " "
@@ -43,7 +44,7 @@ do
 		printf "\033[33m" "%-20s", $1 x "\033[33m"
 		
 		system("touch temp/"$1)
-		print x > "temp/"$1
+		print x >> "temp/"$1
 
 		x=(sqrt(x)-1)/(sqrt(10)-1)
 		for(i=0;i<x; i++)
@@ -53,21 +54,20 @@ do
 	END{
 		printf "\033[37m" "" "\033[37m"
 	}'
-	
-	tail -n 100 "temp/eth0:" | awk -e '
+	tail -n 50 "temp/eth0:" | awk -e '
 	BEGIN{
 		RS="~"
 	}
 	
 	{
-		for(j=30;j>0;j--)
-			for(i=0;i<100;i++)
-				if( (sqrt($i)-1)/(sqrt(10)-1) > j)
-					printf "H"
+		for(j=10;j>0;j--){
+			for(i=0;i<60;i++)
+				if( (sqrt($i)-1)/(sqrt(10)-1) > j*sqrt(10))
+					printf "\033[35m" "H" "\033[37m"
 				else
 					printf " "
 
-		printf "\n"
+			printf "\n"}
 	}
 
 	END{
