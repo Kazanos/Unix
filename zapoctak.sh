@@ -10,15 +10,12 @@ simplifyTo(){
 a="$TMP/a"
 b="$TMP/b"
 c="$TMP/c"
-mkdir -p temp
 
 > "$a"
 simplifyTo "$a"
 sleep 1
 
-
-
-while [ 1 ]
+while true
 do
 	> $b
 	simplifyTo $b
@@ -28,7 +25,7 @@ do
 	cat $b > $a
 	
 	clear
-	cat $c | awk -e '
+	cat $c | awk -v path="$TMP/" -e '
 	BEGIN{
 		printf "\033[33m" "%-20s", " " "\033[33m"
 		for(i=1;i<=10000;i=(i*10)){
@@ -43,8 +40,8 @@ do
 		x=($4 - $2)
 		printf "\033[33m" "%-20s", $1 x "\033[33m"
 		
-		system("touch temp/"$1)
-		print x >> "temp/"$1
+		system("touch "path$1)
+		print x >> path$1
 
 		x=(sqrt(x)-1)/(sqrt(10)-1)
 		for(i=0;i<x; i++)
@@ -54,7 +51,7 @@ do
 	END{
 		printf "\033[37m" "" "\033[37m"
 	}'
-	tail -n 50 "temp/eth0:" | awk -e '
+	tail -n 50 "$TMP/eth0:" | awk -e '
 	BEGIN{
 		RS="~"
 	}
