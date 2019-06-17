@@ -60,11 +60,12 @@ do
 	}
 	
 	{
-		for(i=0;i<100;i++)
-			if((sqrt($i)-1)/(sqrt(10)-1))
-				printf "H"
-			else
-				printf " "
+		for(j=30;j>0;j--)
+			for(i=0;i<100;i++)
+				if( (sqrt($i)-1)/(sqrt(10)-1) > j)
+					printf "H"
+				else
+					printf " "
 
 		printf "\n"
 	}
