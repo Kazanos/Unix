@@ -84,6 +84,10 @@ do
 	}'
 
 	name="eth0"
+	if [ $@ > 0 ] 
+	then
+		name="$1"
+	fi
 	tail -n 35 "$TMP/$name:" | awk -v name=$name -e '
 	BEGIN{
 		RS="~"
@@ -92,13 +96,15 @@ do
 	
 	{
 		for(j=10;j>0;j--){
+			printf "  "
+
 			for(i=0;i<35;i++)
 				if( (log($(4*i+1))/log(10)) > j)
 					printf "\033[35m" "H"
 				 else
                                         printf " "
 			
-			printf "     "
+			printf "    "
 
 			for(i=0;i<35;i++)
                                 if( (log($(4*i+3))/log(10)) > j)
@@ -109,13 +115,15 @@ do
                         printf "\n"}
 
 		for(j=10;j>0;j--){
+			printf "  "
+
 			for(i=0;i<35;i++)
                                 if( (log($(4*i+2))) > j)
                                         printf "\033[36m" "H"
                                 else
                                         printf " "
 			
-			printf "     "
+			printf "    "
 
                         for(i=0;i<35;i++)
                                 if( (log($(4*i+4))) > j)
@@ -130,7 +138,6 @@ do
 	END{
 		RS="\n"
 		printf "\033[37m" "" "\033[37m"
-	}
-	'
+	}';
 	read -r -s -n 1 -t 1 input
 done
