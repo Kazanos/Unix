@@ -88,6 +88,14 @@ do
 	then
 		name="$1"
 	fi
+	
+	count=$(wc -l < "$TMP/$name:")
+
+	if [ "$count" -gt 36000 ]
+	then
+		tail -n 18000 "$TMP/$name:" > "$TMP/$name:"
+	fi
+
 	tail -n 35 "$TMP/$name:" | awk -v name=$name -e '
 	BEGIN{
 		RS="~"
